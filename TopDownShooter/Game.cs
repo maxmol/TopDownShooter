@@ -12,7 +12,7 @@ namespace TopDownShooter
 		private List<Entity> _entities;
 		public List<Entity> Entities
 		{
-			get => new List<Entity>(_entities); // make a copy
+			get => new(_entities); // make a copy
 			set => _entities = value;
 		}
 		
@@ -27,9 +27,7 @@ namespace TopDownShooter
 			Entities = new List<Entity>();
 			Player = CreateEntity<Player>();
 			Camera = CreateEntity<Camera>();
-
-			Enemy testEnemy = CreateEntity<Enemy>();
-			testEnemy.Pos = new Vector(300, 50);
+			Camera.Following = Player;
 		}
 		
 		// Generic entity creation method
@@ -39,6 +37,7 @@ namespace TopDownShooter
 			T ent = new T();
 			_entities.Add(ent);
 			ent.Game = this;
+			ent.Create();
 			return ent;
 		}
 

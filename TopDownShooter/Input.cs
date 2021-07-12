@@ -17,7 +17,7 @@ namespace TopDownShooter
 	public static class Input
 	{
 		// Default control scheme for Windows Forms key codes
-		public static Dictionary<Keys, Button> Controls = new Dictionary<Keys, Button>
+		public static Dictionary<Keys, Button> Controls = new()
 		{
 			[Keys.W] = Button.Up,
 			[Keys.A] = Button.Left,

@@ -68,8 +68,8 @@ namespace TopDownShooter
 
 		public Vector ToScreen(Camera camera)
 		{
-			float x = X - camera.Pos.X;
-			float y = Y - camera.Pos.Y;
+			float x = X - camera.Pos.X + camera.ViewWidth()/2;
+			float y = Y - camera.Pos.Y + camera.ViewHeight()/2;
 			x *= camera.Zoom;
 			y *= camera.Zoom;
 
@@ -96,10 +96,17 @@ namespace TopDownShooter
 
 			return (float) angle % 360;
 		}
-		
+	
+		// Get the directional vector with length of 1
 		public Vector Normalized() {
 			float len = Length();
 			return new Vector(X / len, Y / len);
+		}
+		
+		// Smooth transition from one vector to another
+		public Vector Lerp(float fraction, Vector to)
+		{
+			return new Vector(X + (to.X - X) * fraction, Y + (to.Y - Y) * fraction);
 		}
 	}
 }

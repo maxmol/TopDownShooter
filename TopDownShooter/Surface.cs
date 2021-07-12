@@ -8,7 +8,7 @@ namespace TopDownShooter
 	{
 		private static class ImageLoader
 		{
-			private static Dictionary<string, Bitmap> Cache = new Dictionary<string, Bitmap>();
+			private static Dictionary<string, Bitmap> Cache = new();
 			private static string ImagesFolder = "Assets/Sprites/";
 			private static readonly Bitmap ErrorBitmap = LoadBitmap("cross.png");
 		

@@ -38,14 +38,17 @@
 					}
 				}
 			}
-			
-			Vector scrPos = Pos.ToScreen(Game.Camera);
-			if (scrPos.X < 0 ||
-			    scrPos.Y < 0 ||
-			    scrPos.X > Game.Surface.ScreenWidth() ||
-			    scrPos.Y > Game.Surface.ScreenHeight())
+
+			if (IsValid()) // the bullet can be deleted 
 			{
-				Delete();
+				Vector scrPos = Pos.ToScreen(Game.Camera);
+				if (scrPos.X < 0 ||
+				    scrPos.Y < 0 ||
+				    scrPos.X > Game.Surface.ScreenWidth() ||
+				    scrPos.Y > Game.Surface.ScreenHeight())
+				{
+					Delete();
+				}
 			}
 		}
 	}

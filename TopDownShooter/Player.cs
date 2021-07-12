@@ -3,9 +3,6 @@
 namespace TopDownShooter
 {	public class Player : Actor
 	{
-		// Player speed (pixels per second)
-		protected float Speed = 200f;
-		
 		// Direction facing
 		protected Vector Direction = Vector.Right;
 		
