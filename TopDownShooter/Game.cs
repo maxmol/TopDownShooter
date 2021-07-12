@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TopDownShooter
 {
 	public class Game
 	{
-		public Player Player { get; private set; }
 		public Camera Camera { get; private set; }
 		
 		// A list of all game objects
@@ -25,9 +25,7 @@ namespace TopDownShooter
 			Surface = new Surface();
 			
 			Entities = new List<Entity>();
-			Player = CreateEntity<Player>();
 			Camera = CreateEntity<Camera>();
-			Camera.Following = Player;
 		}
 		
 		// Generic entity creation method
@@ -50,7 +48,7 @@ namespace TopDownShooter
 		// Loops through all game entities and calls their Draw methods
 		public void Draw(float deltaTime)
 		{
-			Surface.DrawColoredRect(Color.Black, 0, 0, Surface.ScreenWidth(), Surface.ScreenHeight());
+			Surface.ClearScreen();
 
 			foreach (Entity entity in Entities)
 			{

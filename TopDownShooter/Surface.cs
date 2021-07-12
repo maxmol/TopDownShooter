@@ -81,17 +81,22 @@ namespace TopDownShooter
 		public void DrawColoredRect(Color color, float x, float y, float w, float h)
 		{
 			SetDrawColor(color);
-			DrawRect(x, y, h, w);
+			DrawRect(x, y, w, h);
+		}
+
+		public void ClearScreen()
+		{
+			DrawColoredRect(Color.Black, 0, 0, ScreenWidth(), ScreenHeight());
 		}
 		
 		public int ScreenWidth()
 		{
-			return Form1.Instance.ClientSize.Width;
+			return Form1.Instance.Size.Width;
 		}
 
 		public int ScreenHeight()
 		{
-			return Form1.Instance.ClientSize.Height;
+			return Form1.Instance.Size.Height;
 		}
 
 		public int TextureWidth(string imagePath)
@@ -104,6 +109,12 @@ namespace TopDownShooter
 			return ImageLoader.LoadBitmap(imagePath).Height;
 		}
 		
+		public void DrawText(string text, string font, float x, float y, int fontSize)
+		{
+			Font drawFont = new Font(font, fontSize);
+			Form1.Instance.Graphics.DrawString(text, drawFont, Brush, x, y, new StringFormat());
+			drawFont.Dispose();
+		}
 	}
 	
 	public partial class Vector

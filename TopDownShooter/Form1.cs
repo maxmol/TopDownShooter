@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using TopDownShooter.Levels;
+using MainMenu = System.Windows.Forms.MainMenu;
 
 namespace TopDownShooter
 {
@@ -36,7 +37,7 @@ namespace TopDownShooter
 			Game = new Game();
 			
 			// Load a level
-			Game.CreateEntity<LevelTestEnemies>();
+			Game.CreateEntity<MainMenuLevel>();
 		}
 
 		// Main game timer's tick event
