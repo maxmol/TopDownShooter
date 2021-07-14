@@ -12,7 +12,6 @@
 		{
 			return Game.Surface.ScreenWidth() / Zoom;
 		}
-		
 		public float ViewHeight()
 		{
 			return Game.Surface.ScreenHeight() / Zoom;
@@ -24,7 +23,8 @@
 
 			if (Following is not null)
 			{
-				Pos = Pos.Lerp(deltaTime * 5, Following.Pos);
+				//Pos = Pos.Lerp(deltaTime * 5, Following.Pos);
+				Pos = Following.Pos;
 			}
 		}
 	}

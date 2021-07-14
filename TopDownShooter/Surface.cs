@@ -6,35 +6,6 @@ namespace TopDownShooter
 {
 	public class Surface
 	{
-		private static class ImageLoader
-		{
-			private static Dictionary<string, Bitmap> Cache = new();
-			private static string ImagesFolder = "Assets/Sprites/";
-			private static readonly Bitmap ErrorBitmap = LoadBitmap("cross.png");
-		
-			public static Bitmap LoadBitmap(string path)
-			{
-				if (Cache.TryGetValue(path, out Bitmap cachedBitmap))
-					return cachedBitmap;
-			
-				try
-				{
-					string fullPath = ImagesFolder + path;
-					Bitmap bmp = new Bitmap(fullPath);
-					Log.Info("Loaded " + fullPath);
-					Cache[path] = bmp;
-					return bmp;
-				}
-				catch (Exception e)
-				{
-					Log.Error("Error loading material " + path);
-					Log.Warning(e.Message);
-				}
-
-				return ErrorBitmap;
-			}
-		}
-
 		private SolidBrush Brush;
 
 		public Surface()
@@ -42,16 +13,13 @@ namespace TopDownShooter
 			Brush = new SolidBrush(Color.White);
 		}
 
-		public void DrawTexturedRect(string imagePath, float x, float y, float w, float h)
+		public void DrawTexturedRect(Texture texture, float x, float y, float w, float h)
 		{
-			Bitmap bitmap = ImageLoader.LoadBitmap(imagePath);
-			Form1.Instance.Graphics.DrawImage(bitmap, x, y, w, h);
+			Form1.Instance.Graphics.DrawImage(texture.GetBitmap(), x, y, w, h);
 		}
-		
-		public void DrawTexturedRectRotated(string imagePath, float x, float y, float w, float h, float angle)
+
+		public void DrawTexturedRectRotated(Texture texture, float x, float y, float w, float h, float angle)
 		{
-			Bitmap bitmap = ImageLoader.LoadBitmap(imagePath);
-			
 			Vector center = new Vector(x, y);
 			
 			Vector up = Vector.Up.Rotate(angle) * (h/2);
@@ -61,18 +29,17 @@ namespace TopDownShooter
 			Vector upperRight = center + up + right;
 			Vector bottomLeft = center - up - right;
 
-			Form1.Instance.Graphics.DrawImage(bitmap, new Point[] {
+			Form1.Instance.Graphics.DrawImage(texture.GetBitmap(), new Point[] {
 				upperLeft,
 				upperRight,
 				bottomLeft
 			});
 		}
-		
+
 		public void SetDrawColor(Color color)
 		{
 			Brush.Color = color;
 		}
-
 		public void DrawRect(float x, float y, float w, float h)
 		{
 			Form1.Instance.Graphics.FillRectangle(Brush, x, y, w, h);
@@ -84,9 +51,9 @@ namespace TopDownShooter
 			DrawRect(x, y, w, h);
 		}
 
-		public void ClearScreen()
+		public void ClearScreen(Color color)
 		{
-			DrawColoredRect(Color.Black, 0, 0, ScreenWidth(), ScreenHeight());
+			Form1.Instance.Graphics.Clear(color);
 		}
 		
 		public int ScreenWidth()
@@ -98,16 +65,6 @@ namespace TopDownShooter
 		{
 			return Form1.Instance.Size.Height;
 		}
-
-		public int TextureWidth(string imagePath)
-		{
-			return ImageLoader.LoadBitmap(imagePath).Width;
-		}
-
-		public int TextureHeight(string imagePath)
-		{
-			return ImageLoader.LoadBitmap(imagePath).Height;
-		}
 		
 		public void DrawText(string text, string font, float x, float y, int fontSize)
 		{
@@ -115,14 +72,11 @@ namespace TopDownShooter
 			Form1.Instance.Graphics.DrawString(text, drawFont, Brush, x, y, new StringFormat());
 			drawFont.Dispose();
 		}
-	}
-	
-	public partial class Vector
-	{
-		// cast from Vector to Point
-		public static implicit operator Point(Vector vec)
+
+		// Checks if a point is out of screen bounds
+		public bool IsVisible(Vector screenPos)
 		{
-			return new Point((int) vec.X, (int) vec.Y);
+			return screenPos.X > 0 && screenPos.Y > 0 && screenPos.X < ScreenWidth() && screenPos.Y < ScreenHeight();
 		}
 	}
 }

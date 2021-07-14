@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace TopDownShooter
 {
@@ -100,6 +101,10 @@ namespace TopDownShooter
 		// Get the directional vector with length of 1
 		public Vector Normalized() {
 			float len = Length();
+
+			if (len == 0)
+				return Vector.Origin;
+			
 			return new Vector(X / len, Y / len);
 		}
 		
@@ -107,6 +112,12 @@ namespace TopDownShooter
 		public Vector Lerp(float fraction, Vector to)
 		{
 			return new Vector(X + (to.X - X) * fraction, Y + (to.Y - Y) * fraction);
+		}
+		
+		// cast from Vector to Point
+		public static implicit operator Point(Vector vec)
+		{
+			return new Point((int) vec.X, (int) vec.Y);
 		}
 	}
 }

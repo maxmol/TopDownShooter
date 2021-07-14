@@ -1,4 +1,6 @@
-﻿namespace TopDownShooter
+﻿using System.Drawing;
+
+namespace TopDownShooter
 {
 	public class Bullet : Sprite
 	{
@@ -19,7 +21,7 @@
 		
 		public Bullet()
 		{
-			Texture = "bullet.png";
+			Texture = new("bullet.png");
 		}
 
 		public override void Tick(float deltaTime)
@@ -27,14 +29,18 @@
 			base.Tick(deltaTime);
 			Pos += Direction * Speed * deltaTime;
 
+			// TODO: Optimize
 			foreach (Entity entity in Game.Entities)
 			{
-				if (entity is Actor actor)
+				if (entity is IHasCollisionRect collidable)
 				{
-					if (actor.Pos.DistToSqr(Pos) < actor.Size * actor.Size)
+					if (collidable.GetRectangle().Contains(Pos))
 					{
-						actor.Die();
+						if (entity is ICanBeDestroyed destructible)
+							destructible.Die();
+						
 						Delete();
+						return;
 					}
 				}
 			}

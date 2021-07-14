@@ -10,9 +10,7 @@ namespace TopDownShooter.Levels
 		private List<string> LevelNames = new()
 		{
 			"TEST ENEMIES",
-			/*"MANSION",
-			"NAVAL BASE",
-			"AIR BASE"*/
+			"TUTORIAL",
 		};
 
 		public override void Draw(Surface surface, Camera camera, float deltaTime)
@@ -43,6 +41,18 @@ namespace TopDownShooter.Levels
 			}
 		}
 
+		private void SelectLevel(int selected)
+		{
+			switch (selected)
+			{
+				case 0:
+					Game.SetLevel<LevelTestEnemies>();
+					break;
+				case 1:
+					Game.SetLevel<LevelTutorial>();
+					break;
+			}
+		}
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -50,21 +60,9 @@ namespace TopDownShooter.Levels
 			if (Input.Pressed(Button.Attack))
 			{
 				if (!LevelSelection)
-				{
 					LevelSelection = true;
-				}
 				else
-				{
-					switch (SelectedLevel)
-					{
-						case 0:
-							Game.CreateEntity<LevelTestEnemies>();
-							break;
-					}
-					
-					Delete();
-					return;
-				}
+					SelectLevel(SelectedLevel);
 			}
 
 			if (Input.Pressed(Button.Down))

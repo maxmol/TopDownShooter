@@ -6,7 +6,7 @@
 
 		public Enemy()
 		{
-			Texture = "player.png";
+			Texture = new("enemy.png");
 		}
 
 		public void WalkTo(Vector pos)
@@ -27,14 +27,22 @@
 
 				float adjustedSpeed = deltaTime * Speed;
 
+				Vector oldPos = Pos;
 				if (path.Length() > adjustedSpeed)
 				{
 					Pos += path.Normalized() * adjustedSpeed;
+
+					if (CheckStuck() != null)
+						Pos = oldPos;
 				}
 				else
 				{
 					Pos = DesiredPosition;
-					DesiredPosition = null;
+					
+					if (CheckStuck() != null)
+						Pos = oldPos;
+					else
+						DesiredPosition = null;
 				}
 			}
 		}

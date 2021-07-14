@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace TopDownShooter
@@ -16,6 +15,24 @@ namespace TopDownShooter
 			set => _entities = value;
 		}
 		
+		// Dictionary that stores lists of entities of each class separately to quickly find them
+		//private Dictionary<string, Entity> EntitiesByClassName = new ();
+		
+		// Get all entities that are of specific class
+		public List<T> FindEntities<T>()
+		{
+			List<T> entities = new();
+			foreach (var ent in _entities)
+			{
+				if (ent is T found)
+				{
+					entities.Add(found);
+				}
+			}
+
+			return entities;
+		}
+
 		public Surface Surface { get; private set; }
 
 		public double Time = 0;
@@ -44,11 +61,23 @@ namespace TopDownShooter
 			_entities.Remove(ent);
 		}
 
+		public void RemoveAllEntities()
+		{
+			_entities.Clear();
+			Camera = CreateEntity<Camera>();
+		}
+
+		public void SetLevel<T>() where T : GameLevel, new()
+		{
+			RemoveAllEntities();
+			CreateEntity<T>();
+		}
+
 		// Draws the game world
 		// Loops through all game entities and calls their Draw methods
 		public void Draw(float deltaTime)
 		{
-			Surface.ClearScreen();
+			Surface.ClearScreen(Color.Black);
 
 			foreach (Entity entity in Entities)
 			{

@@ -1,4 +1,5 @@
 ﻿using System;
+using TopDownShooter.Levels;
 
 namespace TopDownShooter
 {	public class Player : Actor
@@ -14,7 +15,7 @@ namespace TopDownShooter
 		
 		public Player()
 		{
-			Texture = "player.png";
+			Texture = new("player.png");
 		}
 
 		public void ShootBullet()
@@ -26,6 +27,14 @@ namespace TopDownShooter
 
 		private void HandleMovement(float deltaTime)
 		{
+			// if we're already stuck in another object even without any movement applied, move away from the object
+			Entity stuckIn = CheckStuck();
+			if (stuckIn != null)
+			{
+				Pos += (Pos - stuckIn.Pos).Normalized();
+				return;
+			}
+			
 			Vector move = Vector.Origin;
 			
 			if (Input.IsDown(Button.Up))
@@ -44,7 +53,11 @@ namespace TopDownShooter
 				Rotation = Vector.Origin.RotationBetween(move) + 90;
 			}
 
+			Vector oldPos = Pos;
 			Pos += move * Speed * deltaTime;
+			
+			if (CheckStuck() != null)
+				Pos = oldPos;
 		}
 
 		public override void Tick(float deltaTime)
@@ -56,6 +69,11 @@ namespace TopDownShooter
 				TimeLastShoot = Game.Time;
 				ShootBullet();
 			}
+		}
+
+		public override void Die()
+		{
+			Game.SetLevel<GameOver>();
 		}
 	}
 }

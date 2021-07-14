@@ -7,7 +7,7 @@ namespace TopDownShooter
 	{
 		
 		// Texture is a string path to an image
-		public string Texture { get; set; }
+		public Texture Texture { get; set; }
 
 		public float Rotation = 0;
 
@@ -16,11 +16,16 @@ namespace TopDownShooter
 		{
 			// calculate screen position
 			Vector screenPos = Pos.ToScreen(camera);
+
+			// don't draw anything if the sprite is not on the screen
+			if (!surface.IsVisible(screenPos))
+				return;
+			
 			float x = screenPos.X, y = screenPos.Y;
 
 			// scale the texture according to camera zoom
-			float w = surface.TextureWidth(Texture) * camera.Zoom;
-			float h = surface.TextureHeight(Texture) * camera.Zoom;
+			float w = Texture.GetWidth() * camera.Zoom;
+			float h = Texture.GetHeight() * camera.Zoom;
 			
 			// draw the texture in the center
 			if (Rotation == 0)
