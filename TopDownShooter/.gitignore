@@ -2,7 +2,5 @@
 /obj/
 /Properties/
 /packages/
-*.csproj
-*.sln
 *.user
 *.idea
