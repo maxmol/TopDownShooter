@@ -8,7 +8,7 @@
 			
 			CreatePlayer();
 			ReadFromFile("tutorial");
-			Game.Camera.Zoom = 2f;
+			Game.Camera.Zoom = 1f;
 		}
 	}
 }

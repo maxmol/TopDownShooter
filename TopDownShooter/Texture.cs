@@ -43,7 +43,9 @@ namespace TopDownShooter
 					return cachedBitmap;
 
 				Rectangle cut = new(x, y, w, h);
-				return LoadBitmap(path).Clone(cut, PixelFormat.DontCare);
+				Bitmap regionBitmap = LoadBitmap(path).Clone(cut, PixelFormat.DontCare);
+				CacheRegions[cacheKey] = regionBitmap;
+				return regionBitmap;
 			}
 		}
 		
