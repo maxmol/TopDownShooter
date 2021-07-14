@@ -14,7 +14,7 @@ namespace TopDownShooter.Entities
 			return 80f;
 		}
 
-		public void PickedUp()
+		public void PickedUp(Player player)
 		{
 			Game.SetLevel<MissionAccomplished>();
 		}

@@ -11,8 +11,8 @@ namespace TopDownShooter.Levels
 		private int SelectedLevel = 0;
 		private List<string> LevelNames = new()
 		{
-			"TEST ENEMIES",
 			"TUTORIAL",
+			"MANSION",
 		};
 
 		public override void Draw(Surface surface, Camera camera, float deltaTime)
@@ -48,10 +48,10 @@ namespace TopDownShooter.Levels
 			switch (selected)
 			{
 				case 0:
-					Game.SetLevel<LevelTestEnemies>();
+					Game.SetLevel<LevelTutorial>();
 					break;
 				case 1:
-					Game.SetLevel<LevelTutorial>();
+					Game.SetLevel<LevelMansion>();
 					break;
 			}
 		}

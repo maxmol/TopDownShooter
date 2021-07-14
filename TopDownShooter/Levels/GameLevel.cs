@@ -119,6 +119,11 @@ namespace TopDownShooter.Levels
 					}
 					
 					break;
+				case "shotgun":
+					Shotgun shotgun = Game.CreateEntity<Shotgun>();
+					shotgun.Pos = ParsePos(parameters[1], parameters[2]);
+					
+					break;
 			}
 		}
 

@@ -22,6 +22,7 @@ namespace TopDownShooter
 		//private Dictionary<string, Entity> EntitiesByClassName = new ();
 		
 		// Get all entities that are of specific class
+		// TODO: Cache output
 		public List<T> FindEntities<T>()
 		{
 			List<T> entities = new();
@@ -85,6 +86,11 @@ namespace TopDownShooter
 			foreach (Entity entity in Entities)
 			{
 				entity.Draw(Surface, Camera, deltaTime);
+			}
+
+			foreach (var entity in Entities)
+			{
+				entity.DrawHud(Surface);
 			}
 
 			float fps = 1 / deltaTime;

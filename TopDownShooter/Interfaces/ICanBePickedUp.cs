@@ -1,8 +1,10 @@
-﻿namespace TopDownShooter
+﻿using TopDownShooter.Entities;
+
+namespace TopDownShooter
 {
 	public interface ICanBePickedUp
 	{
 		public float PickUpDistance();
-		public void PickedUp();
+		public void PickedUp(Player player);
 	}
 }

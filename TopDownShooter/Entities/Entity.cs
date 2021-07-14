@@ -21,6 +21,9 @@ namespace TopDownShooter.Entities
 		// Draw function renders our object on the 2d surface taking Camera position and Zoom into account
 		public virtual void Draw(Surface surface, Camera camera, float deltaTime) {}
 		
+		// Draw over everything else
+		public virtual void DrawHud(Surface surface) {}
+		
 		// Entity's update logic must be in this method
 		public virtual void Tick(float deltaTime) {}
 		

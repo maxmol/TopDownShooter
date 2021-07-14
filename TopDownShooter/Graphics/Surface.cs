@@ -64,7 +64,8 @@ namespace TopDownShooter.Graphics
 		// Checks if a point is out of screen bounds
 		public bool IsVisible(Vector screenPos)
 		{
-			return screenPos.X > 0 && screenPos.Y > 0 && screenPos.X < ScreenWidth() && screenPos.Y < ScreenHeight();
+			float add = 32f;
+			return screenPos.X > -add && screenPos.Y > -add && screenPos.X < ScreenWidth() + add && screenPos.Y < ScreenHeight() + add;
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace TopDownShooter.Entities
 		}
 
 		public float Speed = 500f;
+		public int Damage = 20;
 		
 		public Bullet()
 		{
@@ -37,7 +38,7 @@ namespace TopDownShooter.Entities
 					if (collidable.GetRectangle().Contains(Pos))
 					{
 						if (entity is ICanBeDestroyed destructible)
-							destructible.Die();
+							destructible.TakeDamage(Damage);
 						
 						Delete();
 						return;

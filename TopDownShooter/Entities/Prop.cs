@@ -2,7 +2,7 @@
 {
 	public class Prop : StaticProp, ICanBeDestroyed
 	{
-		public void Die()
+		public void TakeDamage(int damage)
 		{
 			Delete();
 		}

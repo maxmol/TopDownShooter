@@ -1,28 +1,24 @@
-﻿using TopDownShooter.Levels;
+﻿using System;
+using System.Drawing;
+using TopDownShooter.Graphics;
+using TopDownShooter.Levels;
 using TopDownShooter.Utility;
 
 namespace TopDownShooter.Entities
 {	public class Player : Actor
 	{
-		// Direction facing
-		protected Vector Direction = Vector.Right;
-		
 		// Delay between shots
         private float ShootCooldown = 0.5f;
         
         // Last time a bullet was shot
         private double TimeLastShoot = 0;
-		
-		public Player()
+        
+        // Health points
+        public int Health = 100;
+
+        public Player()
 		{
 			Texture = new("player.png");
-		}
-
-		public void ShootBullet()
-		{
-			Bullet b = Game.CreateEntity<Bullet>();
-			b.Pos = Pos + Direction * 50;
-			b.Direction = Direction;
 		}
 
 		private void HandleMovement(float deltaTime)
@@ -69,7 +65,7 @@ namespace TopDownShooter.Entities
 					float dist = pickable.PickUpDistance();
 					
 					if (entity.Pos.DistToSqr(Pos) < dist * dist) 
-						pickable.PickedUp();
+						pickable.PickedUp(this);
 				}
 			}
 		}
@@ -87,9 +83,21 @@ namespace TopDownShooter.Entities
 			PickUpTick();
 		}
 
-		public override void Die()
+		public override void TakeDamage(int damage)
 		{
-			Game.SetLevel<GameOver>();
+			Health = Math.Max(Health - damage, 0);
+			
+			if (Health == 0)
+				Game.SetLevel<GameOver>();
+		}
+		
+		public override void DrawHud(Surface surface)
+		{
+			surface.SetDrawColor(Color.White);
+			surface.DrawText("HEALTH :", "Consolas", 8, surface.ScreenHeight() - 94, 16);
+			
+			surface.SetDrawColor(Color.Red);
+			surface.DrawText(Health.ToString(), "Impact", 90, surface.ScreenHeight() - 100, 24);
 		}
 	}
 }

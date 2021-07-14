@@ -2,6 +2,6 @@
 {
 	public interface ICanBeDestroyed : IHasCollisionRect
 	{
-		public void Die();
+		public void TakeDamage(int damage);
 	}
 }
