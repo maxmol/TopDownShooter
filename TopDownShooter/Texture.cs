@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using unvell.D2DLib;
 
 namespace TopDownShooter
 {
@@ -9,23 +10,25 @@ namespace TopDownShooter
 	{
 		private static class ImageLoader
 		{
-			private static Dictionary<string, Bitmap> Cache = new();
-			private static Dictionary<string, Bitmap> CacheRegions = new();
+			private static Dictionary<string, D2DBitmap> Cache = new();
+			private static Dictionary<string, D2DBitmap> CacheRegions = new();
 			private static string ImagesFolder = "Assets/Sprites/";
-			private static readonly Bitmap ErrorBitmap = LoadBitmap("error.png");
+			private static readonly D2DBitmap ErrorBitmap = LoadBitmap("error.png");
 
-			public static Bitmap LoadBitmap(string path)
+			public static D2DBitmap LoadBitmap(string path)
 			{
-				if (Cache.TryGetValue(path, out Bitmap cachedBitmap))
+				if (Cache.TryGetValue(path, out D2DBitmap cachedBitmap))
 					return cachedBitmap;
 
 				try
 				{
 					string fullPath = ImagesFolder + path;
 					Bitmap bmp = new Bitmap(fullPath);
+
+					D2DBitmap d2dBmp = Form1.Instance.Device.CreateBitmapFromGDIBitmap(bmp);
 					Log.Info("Loaded " + fullPath);
-					Cache[path] = bmp;
-					return bmp;
+					Cache[path] = d2dBmp;
+					return d2dBmp;
 				}
 				catch (Exception e)
 				{
@@ -36,14 +39,31 @@ namespace TopDownShooter
 				return ErrorBitmap;
 			}
 
-			public static Bitmap LoadBitmapRegion(string path, int x, int y, int w, int h)
+			public static D2DBitmap LoadBitmapRegion(string path, int x, int y, int w, int h)
 			{
 				string cacheKey = $"{path}[{x},{y},{w},{h}]";
-				if (CacheRegions.TryGetValue(cacheKey, out Bitmap cachedBitmap))
+				if (CacheRegions.TryGetValue(cacheKey, out D2DBitmap cachedBitmap))
 					return cachedBitmap;
 
-				Rectangle cut = new(x, y, w, h);
-				return LoadBitmap(path).Clone(cut, PixelFormat.DontCare);
+				Log.Info("Creating bitmap from region " + cacheKey);
+				try
+				{
+					string fullPath = ImagesFolder + path;
+					Bitmap bmp = new Bitmap(fullPath);
+
+					Rectangle cut = new(x, y, w, h);
+					bmp = bmp.Clone(cut, PixelFormat.DontCare);
+					D2DBitmap tileBitmap = Form1.Instance.Device.CreateBitmapFromGDIBitmap(bmp);
+					CacheRegions[cacheKey] = tileBitmap;
+					return tileBitmap;
+				}
+				catch (Exception e)
+				{
+					Log.Error("Error loading material " + path);
+					Log.Warning(e.Message);
+				}
+				
+				return ErrorBitmap;
 			}
 		}
 		
@@ -73,7 +93,7 @@ namespace TopDownShooter
 			IsTile = true;
 			Tile = tileNumber;
 			TileSize = tileSize;
-			TilesRowNum = ImageLoader.LoadBitmap(Filename).Width / TileSize;
+			TilesRowNum = (int) ImageLoader.LoadBitmap(Filename).Width / TileSize;
 		}
 
 		public int GetX()
@@ -98,17 +118,17 @@ namespace TopDownShooter
 		
 		public int GetWidth()
 		{
-			int width = ImageLoader.LoadBitmap(Filename).Width;
+			int width = (int) ImageLoader.LoadBitmap(Filename).Width;
 			return IsTile ? width / TilesRowNum : width;
 		}
 
 		public int GetHeight()
 		{
 			// all tiles are square
-			return IsTile ? GetWidth() : ImageLoader.LoadBitmap(Filename).Height;
+			return IsTile ? GetWidth() : (int) ImageLoader.LoadBitmap(Filename).Height;
 		}
 
-		public Bitmap GetBitmap()
+		public D2DBitmap GetBitmap()
 		{
 			return IsTile ? 
 				ImageLoader.LoadBitmapRegion(Filename, GetX(), GetY(), GetWidth(), GetHeight()) :

@@ -29,27 +29,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.gameLoop = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // gameLoop
-            // 
-            this.gameLoop.Enabled = true;
-            this.gameLoop.Interval = 50;
-            this.gameLoop.Tick += new System.EventHandler(this.gameLoop_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
         }
-
-        private System.Windows.Forms.Timer gameLoop;
 
         #endregion
     }

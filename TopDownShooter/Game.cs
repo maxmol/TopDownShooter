@@ -77,12 +77,17 @@ namespace TopDownShooter
 		// Loops through all game entities and calls their Draw methods
 		public void Draw(float deltaTime)
 		{
-			Surface.ClearScreen(Color.Black);
+			Surface.ClearScreen();
 
 			foreach (Entity entity in Entities)
 			{
 				entity.Draw(Surface, Camera, deltaTime);
 			}
+
+			float fps = 1 / deltaTime;
+			
+			Surface.SetDrawColor(Color.White);
+			Surface.DrawText("FPS: " + fps, "Consolas", 16, 16,  12);
 		}
 		
 		// Updates all game entities

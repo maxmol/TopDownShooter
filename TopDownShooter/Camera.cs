@@ -23,8 +23,7 @@
 
 			if (Following is not null)
 			{
-				//Pos = Pos.Lerp(deltaTime * 5, Following.Pos);
-				Pos = Following.Pos;
+				Pos = Pos.Lerp(deltaTime * 5, Following.Pos);
 			}
 		}
 	}

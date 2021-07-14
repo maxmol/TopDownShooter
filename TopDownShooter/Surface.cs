@@ -1,48 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using unvell.D2DLib;
 
 namespace TopDownShooter
 {
 	public class Surface
 	{
-		private SolidBrush Brush;
+		private D2DColor CurrentColor;
 
 		public Surface()
 		{
-			Brush = new SolidBrush(Color.White);
+			CurrentColor = D2DColor.White;
 		}
 
 		public void DrawTexturedRect(Texture texture, float x, float y, float w, float h)
 		{
-			Form1.Instance.Graphics.DrawImage(texture.GetBitmap(), x, y, w, h);
+			Form1.Instance.Direct2D.DrawBitmap(texture.GetBitmap(), new D2DRect(x, y, w, h));
 		}
 
 		public void DrawTexturedRectRotated(Texture texture, float x, float y, float w, float h, float angle)
 		{
-			Vector center = new Vector(x, y);
-			
-			Vector up = Vector.Up.Rotate(angle) * (h/2);
-			Vector right = Vector.Right.Rotate(angle) * (w/2);
-			
-			Vector upperLeft = center + up - right;
-			Vector upperRight = center + up + right;
-			Vector bottomLeft = center - up - right;
-
-			Form1.Instance.Graphics.DrawImage(texture.GetBitmap(), new Point[] {
-				upperLeft,
-				upperRight,
-				bottomLeft
-			});
+			Form1.Instance.Direct2D.PushTransform();
+			Form1.Instance.Direct2D.RotateTransform(angle, new D2DPoint(x, y));
+			DrawTexturedRect(texture, x - w/2, y - h/2, w, h);
+			Form1.Instance.Direct2D.PopTransform();
 		}
 
 		public void SetDrawColor(Color color)
 		{
-			Brush.Color = color;
+			CurrentColor = new D2DColor((float)color.A/255, (float)color.R/255, (float)color.G/255, (float)color.B/255);
 		}
 		public void DrawRect(float x, float y, float w, float h)
 		{
-			Form1.Instance.Graphics.FillRectangle(Brush, x, y, w, h);
+			Form1.Instance.Direct2D.DrawRectangle(x, y, w, h, CurrentColor);
 		}
 		
 		public void DrawColoredRect(Color color, float x, float y, float w, float h)
@@ -51,9 +43,9 @@ namespace TopDownShooter
 			DrawRect(x, y, w, h);
 		}
 
-		public void ClearScreen(Color color)
+		public void ClearScreen()
 		{
-			Form1.Instance.Graphics.Clear(color);
+			Form1.Instance.Direct2D.Clear(D2DColor.Black);
 		}
 		
 		public int ScreenWidth()
@@ -68,9 +60,7 @@ namespace TopDownShooter
 		
 		public void DrawText(string text, string font, float x, float y, int fontSize)
 		{
-			Font drawFont = new Font(font, fontSize);
-			Form1.Instance.Graphics.DrawString(text, drawFont, Brush, x, y, new StringFormat());
-			drawFont.Dispose();
+			Form1.Instance.Direct2D.DrawText(text, CurrentColor, font, fontSize, x, y);
 		}
 
 		// Checks if a point is out of screen bounds
