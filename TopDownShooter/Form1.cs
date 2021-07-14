@@ -39,7 +39,7 @@ namespace TopDownShooter
 			Game = new Game();
 			
 			// Load a level
-			Game.SetLevel<MainMenuLevel>();
+			Game.SetLevel<Levels.MainMenu>();
 		}
 
 		protected override void OnRender(D2DGraphics g)

@@ -1,4 +1,6 @@
-﻿namespace TopDownShooter
+﻿using System.Collections.Generic;
+
+namespace TopDownShooter
 {
 	public class Enemy : Actor
 	{
@@ -7,11 +9,34 @@
 		public Enemy()
 		{
 			Texture = new("enemy.png");
+			Speed = 100f;
 		}
+
+		private List<Vector> WalkPattern = new();
+		private int NextWalkToIndex = 0;
 
 		public void WalkTo(Vector pos)
 		{
 			DesiredPosition = pos;
+		}
+
+		public void AddWalkPos(Vector pos)
+		{
+			WalkPattern.Add(pos);
+
+			if (DesiredPosition == null)
+			{
+				WalkTo(pos);
+			}
+		}
+
+		private void ContinuePatternWalking()
+		{
+			if (WalkPattern.Count > 1)
+			{
+				NextWalkToIndex = (NextWalkToIndex + 1) % WalkPattern.Count;
+				WalkTo(WalkPattern[NextWalkToIndex]);
+			}
 		}
 
 		public override void Tick(float deltaTime)
@@ -43,6 +68,8 @@
 						Pos = oldPos;
 					else
 						DesiredPosition = null;
+
+					ContinuePatternWalking();
 				}
 			}
 		}

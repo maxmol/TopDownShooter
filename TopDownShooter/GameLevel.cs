@@ -6,6 +6,7 @@ namespace TopDownShooter
 	// A level is also an entity
 	public class GameLevel : Entity
 	{
+		protected Vector PlayerSpawnPos = Vector.Origin;
 		private static string LevelsFolder = "Assets/Levels/";
 		protected void ReadFromFile(string name)
 		{
@@ -23,13 +24,13 @@ namespace TopDownShooter
 					continue;
 				}
 
-				GenerateEntityFromString(line, group);
+				ParseLine(line, group);
 			}  
   
 			file.Close();  
 		}
 
-		private void GenerateEntityFromString(string str, string group)
+		private void ParseLine(string str, string group)
 		{
 			string[] parameters = str.Split();
 			
@@ -39,42 +40,92 @@ namespace TopDownShooter
 				return;
 			}
 
-			if (!float.TryParse(parameters[1], out float xPos) ||
-			    !float.TryParse(parameters[2], out float yPos))
-			{
-				Log.Error($"Invalid position in level data : \n{str}");
-				return;
-			}
-
-
-			Entity ent;
 			switch (group)
 			{
 				case "props":
-					Prop prop = Game.CreateEntity<Prop>();
-					ent = prop;
-					if (int.TryParse(parameters[0], out int propTile))
-						prop.Texture = new("tiles.png", propTile);
-					
+					ParseProp(parameters);
 					break;
 				case "static":
-					StaticProp staticProp = Game.CreateEntity<StaticProp>();
-					if (int.TryParse(parameters[0], out int staticPropTile))
-						staticProp.Texture = new("tiles.png", staticPropTile);
-
-					ent = staticProp;
+					ParseStaticProp(parameters);
+					break;
+				case "beacons":
+					ParseBeacon(parameters);
 					break;
 				default:
 					Log.Error($"Invalid group in level data : '{group}'");
 					return;
 			}
+		}
 
-			ent.Pos = new Vector(xPos, yPos);
+		private Vector ParsePos(string xStr, string yStr)
+		{
+			if (!float.TryParse(xStr, out float xPos) ||
+			    !float.TryParse(yStr, out float yPos))
+			{
+				Log.Error($"Invalid position in level data : \n{xStr} {yStr}");
+				return Vector.Origin;
+			}
+
+			return new Vector(xPos, yPos);
+		}
+		
+		private void ParseProp(string[] parameters)
+		{
+			Prop prop = Game.CreateEntity<Prop>();
+			if (int.TryParse(parameters[0], out int propTile))
+				prop.Texture = new("tiles.png", propTile);
+
+			prop.Pos = ParsePos(parameters[1], parameters[2]);
+		}
+		
+		private void ParseStaticProp(string[] parameters)
+		{
+			StaticProp prop = Game.CreateEntity<StaticProp>();
+			if (int.TryParse(parameters[0], out int propTile))
+				prop.Texture = new("tiles.png", propTile);
+
+			prop.Pos = ParsePos(parameters[1], parameters[2]);
+		}
+
+		private void ParseBeacon(string[] parameters)
+		{
+			string type = parameters[0];
+
+			switch (type)
+			{
+				case "spawn":
+					PlayerSpawnPos = ParsePos(parameters[1], parameters[2]);
+					break;
+				case "finish":
+					Hostage hostage = Game.CreateEntity<Hostage>();
+					hostage.Pos = ParsePos(parameters[1], parameters[2]);
+
+					if (parameters.Length > 3)
+					{
+						if (int.TryParse(parameters[3], out int rot))
+							hostage.Rotation = rot;
+					}
+					break;
+				case "enemy":
+					Enemy enemy = Game.CreateEntity<Enemy>();
+					enemy.Pos = ParsePos(parameters[1], parameters[2]);
+					
+					int paramIndex = 3;
+					while (parameters.Length >= paramIndex + 2)
+					{
+						enemy.AddWalkPos(ParsePos(parameters[paramIndex], parameters[paramIndex + 1]));
+						paramIndex += 2;
+					}
+					
+					break;
+			}
 		}
 
 		protected Player CreatePlayer()
 		{
 			Player player = Game.CreateEntity<Player>();
+			player.Pos = PlayerSpawnPos;
+			Game.Camera.Pos = player.Pos;
 			Game.Camera.Following = player;
 
 			return player;

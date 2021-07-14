@@ -4,7 +4,7 @@ namespace TopDownShooter
 {
 	public class Actor : Sprite, ICanBeDestroyed
 	{
-		protected int Size = 64;
+		protected int Size = 48;
 
 		public Rectangle GetRectangle()
 		{

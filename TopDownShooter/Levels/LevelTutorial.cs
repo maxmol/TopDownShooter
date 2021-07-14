@@ -6,8 +6,8 @@
 		{
 			base.Create();
 			
-			CreatePlayer();
 			ReadFromFile("tutorial");
+			CreatePlayer();
 			Game.Camera.Zoom = 1f;
 		}
 	}

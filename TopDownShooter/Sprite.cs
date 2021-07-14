@@ -8,6 +8,12 @@ namespace TopDownShooter
 		
 		// Texture is a string path to an image
 		public Texture Texture { get; set; }
+		
+		public Sprite()
+		{ 
+			Texture = new("box.png");
+		}
+
 
 		public float Rotation = 0;
 

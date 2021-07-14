@@ -6,8 +6,8 @@
 		{
 			base.Create();
 			
-			CreatePlayer();
 			ReadFromFile("1");
+			CreatePlayer();
 		}
 	}
 }

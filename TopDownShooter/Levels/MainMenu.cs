@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TopDownShooter.Levels
 {
-	public class MainMenuLevel : GameLevel
+	public class MainMenu : GameLevel
 	{
 		private bool LevelSelection = false;
 		private int SelectedLevel = 0;

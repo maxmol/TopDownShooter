@@ -21,7 +21,7 @@ namespace TopDownShooter
 		public void ShootBullet()
 		{
 			Bullet b = Game.CreateEntity<Bullet>();
-			b.Pos = Pos + Direction * 40;
+			b.Pos = Pos + Direction * 50;
 			b.Direction = Direction;
 		}
 
@@ -60,6 +60,20 @@ namespace TopDownShooter
 				Pos = oldPos;
 		}
 
+		private void PickUpTick()
+		{
+			foreach (Entity entity in Game.Entities)
+			{
+				if (entity is ICanBePickedUp pickable)
+				{
+					float dist = pickable.PickUpDistance();
+					
+					if (entity.Pos.DistToSqr(Pos) < dist * dist) 
+						pickable.PickedUp();
+				}
+			}
+		}
+
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -69,6 +83,8 @@ namespace TopDownShooter
 				TimeLastShoot = Game.Time;
 				ShootBullet();
 			}
+
+			PickUpTick();
 		}
 
 		public override void Die()
