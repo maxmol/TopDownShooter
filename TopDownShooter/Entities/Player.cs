@@ -1,7 +1,7 @@
-﻿using System;
-using TopDownShooter.Levels;
+﻿using TopDownShooter.Levels;
+using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {	public class Player : Actor
 	{
 		// Direction facing

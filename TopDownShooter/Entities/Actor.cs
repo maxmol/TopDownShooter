@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	public class Actor : Sprite, ICanBeDestroyed
 	{

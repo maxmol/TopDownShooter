@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TopDownShooter.Entities;
+using TopDownShooter.Graphics;
+using TopDownShooter.Levels;
 
 namespace TopDownShooter
 {

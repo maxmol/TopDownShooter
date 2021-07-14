@@ -1,4 +1,4 @@
-﻿namespace TopDownShooter
+﻿namespace TopDownShooter.Entities
 {
 	// Camera entity stores our view point as its position and describes our view
 	public class Camera : Entity

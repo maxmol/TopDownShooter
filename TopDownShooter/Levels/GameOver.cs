@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using TopDownShooter.Entities;
+using TopDownShooter.Graphics;
 
 namespace TopDownShooter.Levels
 {

@@ -1,6 +1,6 @@
 ﻿using TopDownShooter.Levels;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	public class Hostage : Sprite, ICanBePickedUp
 	{

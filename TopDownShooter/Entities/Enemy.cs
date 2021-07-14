@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	public class Enemy : Actor
 	{

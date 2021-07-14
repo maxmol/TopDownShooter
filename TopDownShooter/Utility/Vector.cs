@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TopDownShooter.Entities;
 
-namespace TopDownShooter
+namespace TopDownShooter.Utility
 {
 	// 2D point on a surface
 	public partial class Vector

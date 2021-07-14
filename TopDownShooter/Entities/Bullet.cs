@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	public class Bullet : Sprite
 	{

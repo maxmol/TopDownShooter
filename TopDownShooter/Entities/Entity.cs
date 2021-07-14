@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using TopDownShooter.Graphics;
+using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	// Abstract game object class
 	public abstract class Entity

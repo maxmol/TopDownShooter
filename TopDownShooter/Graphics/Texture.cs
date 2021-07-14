@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using TopDownShooter.Utility;
 using unvell.D2DLib;
 
-namespace TopDownShooter
+namespace TopDownShooter.Graphics
 {
 	public class Texture
 	{

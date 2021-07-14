@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using TopDownShooter.Graphics;
+using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Entities
 {
 	// Sprite is an entity with a texture
 	public class Sprite : Entity

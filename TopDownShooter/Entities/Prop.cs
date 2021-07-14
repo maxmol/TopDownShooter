@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TopDownShooter
+﻿namespace TopDownShooter.Entities
 {
 	public class Prop : StaticProp, ICanBeDestroyed
 	{

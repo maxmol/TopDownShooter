@@ -1,4 +1,7 @@
-﻿namespace TopDownShooter.Levels
+﻿using TopDownShooter.Entities;
+using TopDownShooter.Utility;
+
+namespace TopDownShooter.Levels
 {
 	public class LevelTestEnemies : GameLevel
 	{

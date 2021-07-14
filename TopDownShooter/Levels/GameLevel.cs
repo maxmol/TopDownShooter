@@ -1,7 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using TopDownShooter.Entities;
+using TopDownShooter.Utility;
 
-namespace TopDownShooter
+namespace TopDownShooter.Levels
 {
 	// A level is also an entity
 	public class GameLevel : Entity

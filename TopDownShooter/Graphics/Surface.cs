@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
+﻿using System.Drawing;
+using TopDownShooter.Utility;
 using unvell.D2DLib;
 
-namespace TopDownShooter
+namespace TopDownShooter.Graphics
 {
 	public class Surface
 	{

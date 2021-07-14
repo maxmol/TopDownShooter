@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TopDownShooter
+namespace TopDownShooter.Utility
 {
 	// Outputs messages to the console
 	// Used only for debug
