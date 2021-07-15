@@ -23,6 +23,10 @@ namespace TopDownShooter
 			[Keys.A] = Button.Left,
 			[Keys.S] = Button.Down,
 			[Keys.D] = Button.Right,
+			[Keys.Up] = Button.Up,
+			[Keys.Left] = Button.Left,
+			[Keys.Down] = Button.Down,
+			[Keys.Right] = Button.Right,
 			[Keys.Enter] = Button.Attack
 		};
 

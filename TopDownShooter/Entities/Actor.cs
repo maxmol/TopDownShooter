@@ -3,7 +3,7 @@ using TopDownShooter.Utility;
 
 namespace TopDownShooter.Entities
 {
-	public class Actor : Sprite, ICanBeDestroyed
+	public class Actor : Sprite, ICanBeDamaged
 	{
 		// Direction facing
 		protected Vector Direction = Vector.Right;

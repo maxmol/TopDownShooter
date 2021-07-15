@@ -37,7 +37,7 @@ namespace TopDownShooter.Entities
 				{
 					if (collidable.GetRectangle().Contains(Pos))
 					{
-						if (entity is ICanBeDestroyed destructible)
+						if (entity is ICanBeDamaged destructible)
 							destructible.TakeDamage(Damage);
 						
 						Delete();

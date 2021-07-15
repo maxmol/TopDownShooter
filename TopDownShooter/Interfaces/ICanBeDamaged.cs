@@ -1,6 +1,6 @@
 ﻿namespace TopDownShooter
 {
-	public interface ICanBeDestroyed : IHasCollisionRect
+	public interface ICanBeDamaged : IHasCollisionRect
 	{
 		public void TakeDamage(int damage);
 	}

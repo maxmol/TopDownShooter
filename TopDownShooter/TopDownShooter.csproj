@@ -75,7 +75,7 @@
         <Compile Include="Graphics\Surface.cs" />
         <Compile Include="Graphics\Texture.cs" />
         <Compile Include="Input.cs" />
-        <Compile Include="Interfaces\ICanBeDestroyed.cs" />
+        <Compile Include="Interfaces\ICanBeDamaged.cs" />
         <Compile Include="Interfaces\ICanBePickedUp.cs" />
         <Compile Include="Interfaces\IHasCollisionRect.cs" />
         <Compile Include="Levels\GameLevel.cs" />
