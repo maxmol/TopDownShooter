@@ -38,7 +38,7 @@
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Top Down Shooter";
             this.ResumeLayout(false);
         }
 
